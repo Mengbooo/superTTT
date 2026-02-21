@@ -1,0 +1,209 @@
+/* Import Geist Design System Tokens */
+@import './geist-tokens.css';
+
+/* Import Bento Grid Layout Utilities */
+@import './bento-grid.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--geist-background);
+  color: var(--geist-foreground);
+  transition: background-color var(--transition-fast) var(--ease-in-out),
+              color var(--transition-fast) var(--ease-in-out);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--geist-primary);
+  outline-offset: 2px;
+}
+
+/* Touch Targets - WCAG minimum 44x44px */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[tabindex] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Ensure all interactive elements have proper touch targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Game board container */
+.game-container {
+  @apply w-full max-w-[min(90vw,600px)] mx-auto;
+}
+
+/* Macro board (3x3 grid of micro boards) */
+.macro-board {
+  @apply grid grid-cols-3 gap-2;
+}
+
+/* Micro board (3x3 grid of squares) */
+.micro-board {
+  @apply aspect-square grid grid-cols-3 gap-0.5 rounded-lg overflow-hidden;
+  transition: all 0.2s ease;
+}
+
+.micro-board.legal-move {
+  @apply ring-4 ring-blue-500 ring-offset-2;
+}
+
+.micro-board.won-by-x {
+  @apply bg-green-200;
+}
+
+.micro-board.won-by-o {
+  @apply bg-blue-200;
+}
+
+.micro-board.draw {
+  @apply bg-gray-300;
+}
+
+/* Individual square */
+.square {
+  @apply aspect-square w-full min-h-[44px] 
+         flex items-center justify-center
+         bg-white border border-gray-300
+         cursor-pointer
+         touch-manipulation
+         transition-all duration-150 ease-in-out
+         hover:bg-gray-50
+         active:bg-gray-100
+         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.square:disabled {
+  @apply cursor-not-allowed bg-gray-100 opacity-70;
+}
+
+.square.legal-move {
+  @apply cursor-pointer hover:bg-blue-50;
+}
+
+.square:not(.legal-move):not(:disabled) {
+  @apply cursor-not-allowed hover:bg-white;
+}
+
+.square.x {
+  @apply text-red-500;
+}
+
+.square.o {
+  @apply text-blue-500;
+}
+
+/* Shake animation for invalid moves */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Winning line highlight */
+.winning-line {
+  @apply bg-yellow-300 animate-pulse;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 
+         flex items-center justify-center
+         z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg p-6 max-w-sm w-full mx-4
+         shadow-xl transform transition-all;
+}
+
+/* Button styles */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium
+         transition-colors duration-150
+         focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply bg-blue-500 text-white hover:bg-blue-600
+         focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300
+         focus:ring-gray-500;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .macro-board {
+    @apply gap-1;
+  }
+  
+  .micro-board {
+    @apply gap-0.5;
+  }
+  
+  .square {
+    @apply min-h-[48px]; /* Larger touch targets on mobile */
+  }
+}

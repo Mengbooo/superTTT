@@ -1,0 +1,120 @@
+/**
+ * Bento Grid Layout Utilities
+ * 
+ * Responsive grid system based on Geist Design principles.
+ * Uses CSS Grid for flexible, mobile-first layouts.
+ */
+
+/* Base Grid Container */
+.bento-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  
+  /* Mobile: single column */
+  @media (min-width: --md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Tablet and up: 2 columns */
+  @media (min-width: --lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Desktop: 3-4 columns based on content */
+  @media (min-width: --xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Bento Grid Item - maintains aspect ratio and neat divisions */
+.bento-item {
+  background-color: var(--geist-background);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  transition: all var(--transition-fast) var(--ease-in-out);
+  min-height: 200px;
+}
+
+.bento-item:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+/* Bento Grid Sizes for varied card proportions */
+.bento-item--span-2 {
+  @media (min-width: --md) {
+    grid-column: span 2;
+  }
+}
+
+.bento-item--tall {
+  @media (min-width: --md) {
+    grid-row: span 2;
+  }
+}
+
+.bento-item--large {
+  @media (min-width: --md) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+/* Touch-friendly spacing for mobile */
+@media (max-width: 767px) {
+  .bento-grid {
+    gap: var(--space-4);
+  }
+  
+  .bento-item {
+    padding: var(--space-4);
+    min-height: auto;
+  }
+}
+
+/* Alternative Grid Configurations */
+.bento-grid--2-col {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  
+  @media (min-width: --md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.bento-grid--3-col {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+  
+  @media (min-width: --md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: --lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive Container Padding */
+.container-padded {
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+  
+  @media (max-width: 639px) {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+/* Edge Whitespace - maintain minimum 24px padding on all screens */
+.edge-padding {
+  padding: var(--space-6);
+  
+  @media (max-width: 639px) {
+    padding: var(--space-4);
+  }
+}
